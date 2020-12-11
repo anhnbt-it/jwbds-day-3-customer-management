@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head"></head>
+<body>
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-header">
+            <h3>Customers <a th:href="@{/customer/create}" class="btn btn-primary">Add new customer</a></h3>
+        </div>
+        <div class="card-body" th:unless="${customers.isEmpty()}">
+            <div class="alert alert-info" th:if="${success}"><span th:text="${success}"></span></div>
+            <table id="customers" class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row, rowStat : ${customers}">
+                    <td th:text="${row.getId()}"></td>
+                    <td th:text="${row.getName()}"></td>
+                    <td th:text="${row.getEmail()}"></td>
+                    <td th:text="${row.getAddress()}"></td>
+                    <td>
+                        <a th:href="@{/customer/{id}/edit(id=${row.getId()})}" class="btn btn-primary">Edit</a>
+                        <a th:href="@{/customer/{id}/delete(id=${row.getId()})}" class="btn btn-danger">Delete</a>
+                        <a th:href="@{/customer/{id}/view(id=${row.getId()})}" class="btn btn-secondary">View</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>
